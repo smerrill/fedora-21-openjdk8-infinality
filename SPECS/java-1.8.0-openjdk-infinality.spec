@@ -123,7 +123,7 @@
 
 Name:    java-%{javaver}-%{origin}-infinality
 Version: %{javaver}.%{updatever}
-Release: 5.%{buildver}%{?dist}
+Release: 6.%{buildver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -263,6 +263,7 @@ BuildRequires: systemtap-sdt-devel
 %endif
 
 Requires: fontconfig
+Requires: freetype-infinality
 Requires: xorg-x11-fonts-Type1
 
 # Requires rest of java
@@ -1352,6 +1353,9 @@ exit 0
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Jan 18 2015 Steven Merrill <steven.merrill@gmail.com> - 1:1.8.0.25-6.b18
+- added freetype-infinality to Requires
+
 * Sun Jan 18 2015 Steven Merrill <steven.merrill@gmail.com> - 1:1.8.0.25-5.b18
 - added infinality patchset, changed package name
 
