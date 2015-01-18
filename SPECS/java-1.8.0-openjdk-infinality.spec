@@ -121,7 +121,7 @@
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack 0
 
-Name:    java-%{javaver}-%{origin}
+Name:    java-%{javaver}-%{origin}-infinality
 Version: %{javaver}.%{updatever}
 Release: 5.%{buildver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
@@ -281,6 +281,7 @@ Provides: java = %{epoch}:%{javaver}
 # Standard JPackage extensions provides.
 Provides: java-fonts = %{epoch}:%{version}
 
+Obsoletes: java-1.8.0-openjdk
 Obsoletes: java-1.7.0-openjdk
 Obsoletes: java-1.5.0-gcj
 Obsoletes: sinjdoc
@@ -323,6 +324,7 @@ Provides: jce = %{epoch}:%{version}
 Provides: jdbc-stdext = 4.1
 Provides: java-sasl = %{epoch}:%{version}
 
+Obsoletes: java-1.8.0-openjdk-headless
 Obsoletes: java-1.7.0-openjdk-headless
 
 %description headless
@@ -349,6 +351,7 @@ Provides: java-%{javaver}-devel = %{epoch}:%{version}
 Provides: java-devel-%{origin} = %{epoch}:%{version}
 Provides: java-devel = %{epoch}:%{javaver}
 
+Obsoletes: java-1.8.0-openjdk-devel
 Obsoletes: java-1.7.0-openjdk-devel
 Obsoletes: java-1.5.0-gcj-devel
 
@@ -362,6 +365,7 @@ Group:   Development/Languages
 Requires: %{name} = %{epoch}:%{version}-%{release}
 OrderWithRequires: %{name}-headless = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-demo
 Obsoletes: java-1.7.0-openjdk-demo
 
 %description demo
@@ -373,6 +377,7 @@ Group:   Development/Languages
 
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-src
 Obsoletes: java-1.7.0-openjdk-src
 
 %description src
@@ -394,6 +399,7 @@ Requires(postun): %{_sbindir}/alternatives
 Provides: java-javadoc = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-javadoc = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-javadoc
 Obsoletes: java-1.7.0-openjdk-javadoc
 
 %description javadoc
@@ -405,6 +411,7 @@ Requires: java-atk-wrapper
 Requires: %{name} = %{epoch}:%{version}-%{release}
 OrderWithRequires: %{name}-headless = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-accessibility
 Obsoletes: java-1.7.0-openjdk-accessibility
 
 %description accessibility
