@@ -1352,6 +1352,9 @@ exit 0
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Jan 18 2015 Steven Merrill <steven.merrill@gmail.com> - 1:1.8.0.25-5.b18
+- added infinality patchset, changed package name
+
 * Fri Nov 07 2014 Jiri Vanek <jvanek@redhat.com> - 1:1.8.0.25-5.b12
 - updated arm64 tarball to jdk8-jdk8u40-b12-aarch64-1263.tar.xz
 
