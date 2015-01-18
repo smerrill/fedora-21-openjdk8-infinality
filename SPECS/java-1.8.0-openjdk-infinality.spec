@@ -175,7 +175,7 @@ Source101: config.sub
 # RPM/distribution specific patches
 
 # Ignore AWTError when assistive technologies are loaded 
-Patch1:   %{name}-accessible-toolkit.patch
+Patch1:   java-1.8.0-openjdk-accessible-toolkit.patch
 
 # Restrict access to java-atk-wrapper classes
 Patch3: java-atk-wrapper-security.patch
@@ -202,9 +202,9 @@ Patch25: 005_enable-infinality.patch
 Patch99: applet-hole.patch
 
 # JVM heap size changes for s390 (thanks to aph)
-Patch100: %{name}-s390-java-opts.patch
+Patch100: java-1.8.0-openjdk-s390-java-opts.patch
 # Type fixing for s390
-Patch102: %{name}-size_t.patch
+Patch102: java-1.8.0-openjdk-size_t.patch
 
 Patch201: system-libjpeg.patch
 Patch202: system-libpng.patch
