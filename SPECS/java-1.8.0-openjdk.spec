@@ -191,6 +191,10 @@ Patch7: include-all-srcs.patch
 Patch11: hotspot-build-j-directive.patch
 Patch12: removeSunEcProvider-RH1154143.patch
 
+# Infinality patches.
+Patch24: 004_add-fontconfig.patch
+Patch25: 005_enable-infinality.patch
+
 #
 # OpenJDK specific patches
 #
@@ -452,6 +456,10 @@ sh %{SOURCE12}
 %patch7
 %patch11
 %patch12
+
+# Infinality patches.
+%patch24
+%patch25
 
 %patch99
 
