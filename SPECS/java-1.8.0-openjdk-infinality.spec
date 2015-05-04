@@ -537,6 +537,7 @@ Provides: java%1 = %{epoch}:%{javaver}
 # Standard JPackage extensions provides.
 Provides: java-fonts%1 = %{epoch}:%{version}
 
+Obsoletes: java-1.8.0-openjdk%1
 Obsoletes: java-1.7.0-openjdk%1
 Obsoletes: java-1.5.0-gcj%1
 Obsoletes: sinjdoc
@@ -574,6 +575,7 @@ Provides: jce%1 = %{epoch}:%{version}
 Provides: jdbc-stdext%1 = 4.1
 Provides: java-sasl%1 = %{epoch}:%{version}
 
+Obsoletes: java-1.8.0-openjdk-headless%1
 Obsoletes: java-1.7.0-openjdk-headless%1
 }
 
@@ -595,6 +597,7 @@ Provides: java-%{javaver}-devel%1 = %{epoch}:%{version}
 Provides: java-devel-%{origin}%1 = %{epoch}:%{version}
 Provides: java-devel%1 = %{epoch}:%{javaver}
 
+Obsoletes: java-1.8.0-openjdk-devel%1
 Obsoletes: java-1.7.0-openjdk-devel%1
 Obsoletes: java-1.5.0-gcj-devel%1
 }
@@ -604,6 +607,7 @@ Obsoletes: java-1.5.0-gcj-devel%1
 Requires: %{name}%1 = %{epoch}:%{version}-%{release}
 OrderWithRequires: %{name}-headless%1 = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-demo%1
 Obsoletes: java-1.7.0-openjdk-demo%1
 }
 
@@ -618,6 +622,7 @@ Requires(postun): %{_sbindir}/alternatives
 Provides: java-javadoc%1 = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-javadoc%1 = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-javadoc%1
 Obsoletes: java-1.7.0-openjdk-javadoc%1
 
 }
@@ -625,6 +630,7 @@ Obsoletes: java-1.7.0-openjdk-javadoc%1
 %global java_src_rpo() %{expand:
 Requires: %{name}-headless%1 = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-src%1
 Obsoletes: java-1.7.0-openjdk-src%1
 }
 
@@ -633,13 +639,14 @@ Requires: java-atk-wrapper
 Requires: %{name}%1 = %{epoch}:%{version}-%{release}
 OrderWithRequires: %{name}-headless%1 = %{epoch}:%{version}-%{release}
 
+Obsoletes: java-1.8.0-openjdk-accessibility%1
 Obsoletes: java-1.7.0-openjdk-accessibility%1
 }
 
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack 0
 
-Name:    java-%{javaver}-%{origin}
+Name:    java-%{javaver}-%{origin}-infinality
 Version: %{javaver}.%{updatever}
 Release: 36.%{buildver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
@@ -682,7 +689,7 @@ Source10: policytool.desktop.in
 Source11: nss.cfg
 
 # Removed libraries that we link instead
-Source12: %{name}-remove-intree-libraries.sh
+Source12: java-1.8.0-openjdk-remove-intree-libraries.sh
 
 # Ensure we aren't using the limited crypto policy
 Source13: TestCryptoLevel.java
@@ -696,12 +703,12 @@ Source101: config.sub
 # RPM/distribution specific patches
 
 # Ignore AWTError when assistive technologies are loaded 
-Patch1:   %{name}-accessible-toolkit.patch
+Patch1:   java-1.8.0-openjdk-accessible-toolkit.patch
 
 # Restrict access to java-atk-wrapper classes
 Patch3: java-atk-wrapper-security.patch
 # RHBZ 808293
-Patch4: %{name}-PStack-808293.patch
+Patch4: java-1.8.0-openjdk-PStack-808293.patch
 # Allow multiple initialization of PKCS11 libraries
 Patch5: multiple-pkcs11-library-init.patch
 # Disable doclint for compatibility
@@ -721,9 +728,9 @@ Patch25: 005_enable-infinality.patch
 #
 
 # JVM heap size changes for s390 (thanks to aph)
-Patch100: %{name}-s390-java-opts.patch
+Patch100: java-1.8.0-openjdk-s390-java-opts.patch
 # Type fixing for s390
-Patch102: %{name}-size_t.patch
+Patch102: java-1.8.0-openjdk-size_t.patch
 
 Patch201: system-libjpeg.patch
 Patch202: system-libpng.patch
