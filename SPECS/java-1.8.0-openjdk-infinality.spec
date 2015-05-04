@@ -712,6 +712,10 @@ Patch7: include-all-srcs.patch
 Patch12: removeSunEcProvider-RH1154143.patch
 Patch13: libjpeg-turbo-1.4-compat.patch
 
+# Infinality patches.
+Patch24: 004_add-fontconfig.patch
+Patch25: 005_enable-infinality.patch
+
 #
 # OpenJDK specific patches
 #
@@ -1022,6 +1026,10 @@ sh %{SOURCE12}
 %patch7
 %patch12
 %patch13
+
+# Infinality patches.
+%patch24
+%patch25
 
 # s390 build fixes
 %ifarch s390
