@@ -117,7 +117,7 @@
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
 %global updatever       45
-%global buildver        b13
+%global buildver        b14
 %global aarch64_updatever 45
 %global aarch64_buildver b13
 %global aarch64_changesetid aarch64-jdk8u45-b13
@@ -549,7 +549,9 @@ Requires: ca-certificates
 # Require jpackage-utils for ownership of /usr/lib/jvm/
 Requires: jpackage-utils
 # Require zoneinfo data provided by tzdata-java subpackage.
-Requires: tzdata-java >= 2014f-1
+Requires: tzdata-java >= 2015d
+# libsctp.so.1 is being `dlopen`ed on demand
+Requires: lksctp-tools
 # Post requires alternatives to install tool alternatives.
 Requires(post):   %{_sbindir}/alternatives
 # Postun requires alternatives to uninstall tool alternatives.
@@ -648,7 +650,7 @@ Obsoletes: java-1.7.0-openjdk-accessibility%1
 
 Name:    java-%{javaver}-%{origin}-infinality
 Version: %{javaver}.%{updatever}
-Release: 36.%{buildver}%{?dist}
+Release: 40.%{buildver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -727,6 +729,9 @@ Patch25: 005_enable-infinality.patch
 # OpenJDK specific patches
 #
 
+# http://hg.openjdk.java.net/jdk9/hs/hotspot/rev/471b684ff43e
+# allow build on Linux 4.x kernels
+Patch99: java-1.8.0-openjdk-linux-4.x.patch
 # JVM heap size changes for s390 (thanks to aph)
 Patch100: java-1.8.0-openjdk-s390-java-opts.patch
 # Type fixing for s390
@@ -759,6 +764,7 @@ Patch503: d318d83c4e74.patch
 Patch504: 1210739_dns_naming_ipv6_addresses.patch
 # Patch for upstream JDK-8078666 (RHBZ#1208369)
 Patch505: 1208369_memory_leak_gcc5.patch
+Patch506: rhbz1213280-b51c6914f297.patch
 
 
 Patch9999: enableArm64.patch
@@ -794,7 +800,7 @@ BuildRequires: java-1.8.0-openjdk-devel
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
 %endif
-BuildRequires: tzdata-java >= 2014f-1
+BuildRequires: tzdata-java >= 2015d
 
 # cacerts build requirement.
 BuildRequires: openssl
@@ -1015,6 +1021,8 @@ cp %{SOURCE101} jdk8/common/autoconf/build-aux/
 # Remove libraries that are linked
 sh %{SOURCE12}
 
+%patch99
+
 # Add AArch64 support to configure & JDK build
 %patch9999
 
@@ -1050,18 +1058,18 @@ sh %{SOURCE12}
 %patch402
 %patch403
 
-# Extract systemtap tapsets
-%if %{with_systemtap}
-
-tar xzf %{SOURCE8}
-
-%patch300
-
 %patch501
 %patch502
 %patch503
 %patch504
 %patch505
+%patch506
+
+# Extract systemtap tapsets
+%if %{with_systemtap}
+tar xzf %{SOURCE8}
+
+%patch300
 
 %if %{include_debug_build}
 cp -r tapset tapset%{debug_suffix}
@@ -1480,7 +1488,6 @@ local caredFiles = {"jre/lib/calendars.properties",
               "jre/lib/net.properties",
               "jre/lib/psfontj2d.properties",
               "jre/lib/sound.properties",
-              "jre/lib/tz.properties",
               "jre/lib/deployment.properties",
               "jre/lib/deployment.config",
               "jre/lib/security/US_export_policy.jar",
@@ -1743,6 +1750,26 @@ end
 %endif
 
 %changelog
+* Fri Jun 05 2015 Jiri Vanek <jvanek@redhat.com> - 1:1.8.0.45-40.b14
+- added requires lksctp-tools for headless subpackage to make sun.nio.ch.sctp work
+- added patch506 rhbz1213280-b51c6914f297.patch
+- allow build on Linux 4.x kernel (sync from master)
+
+* Mon May 25 2015 Jiri Vanek <jvanek@redhat.com> - 1:1.8.0.45-39.b14
+- patches 501-505 moved out of with_systemtap block
+ patch501 1182011_JavaPrintApiDoesNotPrintUmlautCharsWithPostscriptOutputCorrectly.patch
+ patch502 1182694_javaApplicationMenuMisbehave.patch
+ patch503 d318d83c4e74.patch
+ patch504 1210739_dns_naming_ipv6_addresses.patch
+ patch505 1208369_memory_leak_gcc5.patch
+
+* Wed May 13 2015 Jiri Vanek <jvanek@redhat.com> - 1:1.8.0.45-38.b14
+- updated to 8u45-b14 with hope to fix rhbz#1123870
+
+* Wed May 13 2015 Jiri Vanek <jvanek@redhat.com> - 1:1.8.0.45-37.b13
+- added runtime requires for tzdata
+- Remove reference to tz.properties which is no longer used (by gnu.andrew)
+
 * Wed Apr 29 2015 Severin Gehwolf <sgehwolf@redhat.com> - 1:1.8.0.45-36.b13
 - Patch hotspot to not use undefined code rather than passing
   -fno-tree-vrp via CFLAGS.
